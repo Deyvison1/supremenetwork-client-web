@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { PageHeader } from '@supremenetwork/ui';
+import { PageHeader, Button } from '@supremenetwork/ui';
 
 import { ClientResponseDTO } from '../../../shared/dto/response/client-response.dto';
 import { ClientService } from '../../../core/service/client.service';
@@ -25,7 +25,8 @@ import { NotificationService } from '../../../core/service/notification.service'
     MatIconModule,
     ContactPipe,
     MatTooltipModule,
-  ],
+    Button
+],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-client-view',

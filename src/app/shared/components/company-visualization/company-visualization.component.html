@@ -1,0 +1,41 @@
+<section class="company-section">
+  <div class="container">
+    <article class="company-card">
+      <div class="company-content">
+        <div class="company-heading">
+          <span class="company-label">Sobre nós</span>
+          <h2>{{ aboutTheCompany() }}</h2>
+        </div>
+
+        <div class="company-text">
+          <p>
+            Fundada em 2015, a Suprema Network Telecom nasceu com a missão de
+            levar uma conexão de qualidade, com preço justo e atendimento
+            próximo.
+          </p>
+          <p>
+            Evoluímos junto da tecnologia e hoje operamos com uma rede
+            <strong>100% fibra óptica</strong>, com equipe técnica preparada
+            para entregar estabilidade no dia a dia.
+          </p>
+        </div>
+
+        <ul class="company-highlights">
+          @for (item of highlights; track item.label) {
+            <li>
+              <em [class]="'fa-solid ' + item.icon"></em>
+              {{ item.label }}
+            </li>
+          }
+        </ul>
+
+        <div class="company-action">
+          <button type="button" class="company-button" (click)="openModalQrCode()">
+            <span>Assine já</span>
+            <em class="fa-solid fa-arrow-right"></em>
+          </button>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>

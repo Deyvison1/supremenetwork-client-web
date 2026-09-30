@@ -10,59 +10,29 @@
       <div class="content-card">
         <div class="form-row">
           <div class="product-main-fields">
-            <mat-form-field appearance="outline">
-              <mat-label>Nome</mat-label>
+            <sn-input
+              label="Nome"
+              placeholder="Digite o nome"
+              type="text"
+              autocomplete="off"
+              formControlName="name"
+            />
 
-              <input
-                matInput
-                type="text"
-                placeholder="Digite o nome"
-                autocomplete="off"
-                formControlName="name"
-              />
+            <sn-input
+              label="Velocidade de download"
+              placeholder="Mbps"
+              type="number"
+              [min]="0"
+              formControlName="speedDownload"
+            />
 
-              @if (form.controls.name.touched && form.controls.name.invalid) {
-                <mat-error>
-                  <app-form-error [control]="form.controls.name" />
-                </mat-error>
-              }
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Velocidade de download</mat-label>
-
-              <input
-                matInput
-                type="number"
-                min="0"
-                placeholder="Mbps"
-                formControlName="speedDownload"
-              />
-
-              @if (form.controls.speedDownload.touched && form.controls.speedDownload.invalid) {
-                <mat-error>
-                  <app-form-error [control]="form.controls.speedDownload" />
-                </mat-error>
-              }
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Velocidade de upload</mat-label>
-
-              <input
-                matInput
-                type="number"
-                min="0"
-                placeholder="Mbps"
-                formControlName="speedUpload"
-              />
-
-              @if (form.controls.speedUpload.touched && form.controls.speedUpload.invalid) {
-                <mat-error>
-                  <app-form-error [control]="form.controls.speedUpload" />
-                </mat-error>
-              }
-            </mat-form-field>
+            <sn-input
+              label="Velocidade de upload"
+              placeholder="Mbps"
+              type="number"
+              [min]="0"
+              formControlName="speedUpload"
+            />
           </div>
 
           <mat-form-field appearance="outline" class="value-field">
@@ -140,25 +110,7 @@
             }
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="category-field">
-            <mat-label>Categoria</mat-label>
-
-            <mat-select formControlName="categoryId">
-              <mat-option [value]="null" disabled> Selecione uma categoria </mat-option>
-
-              @for (category of categories; track category.key) {
-                <mat-option [value]="category.key">
-                  {{ category.value }}
-                </mat-option>
-              }
-            </mat-select>
-
-            @if (form.controls.categoryId.touched && form.controls.categoryId.invalid) {
-              <mat-error>
-                <app-form-error [control]="form.controls.categoryId" />
-              </mat-error>
-            }
-          </mat-form-field>
+          <sn-select formControlName="categoryId" [options]="categories()" label="Categoria" />
 
           <mat-form-field appearance="outline" class="observacoes-field">
             <mat-label>Descrição</mat-label>
@@ -181,12 +133,20 @@
     </div>
 
     <div class="form-actions">
-      <button mat-stroked-button type="button" [routerLink]="'/product'">Cancelar</button>
+      <sn-button
+        type="button"
+        variant="stroked"
+        icon="cancel"
+        label="Cancelar"
+        routerLinkTo="/product"
+      />
 
-      <button mat-raised-button type="submit">
-        <mat-icon>save</mat-icon>
-        {{ isEdit ? 'Atualizar' : 'Salvar' }}
-      </button>
+      <sn-button
+        type="submit"
+        variant="raised"
+        icon="save"
+        [label]="isEdit ? 'Atualizar' : 'Salvar'"
+      />
     </div>
   </form>
 </div>

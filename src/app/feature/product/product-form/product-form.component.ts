@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -16,12 +16,15 @@ import { NgxCurrency } from '@dintecom/ngx-currency';
 import { CategoryService } from '../../../core/service/category.service';
 import { ProductService } from '../../../core/service/product.service';
 
-import { PageHeader, FormError } from '@supremenetwork/ui';
+import { PageHeader, FormError, Input, Button, Select, SelectOption } from '@supremenetwork/ui';
 
 import { ApiResponseDTO } from '../../../shared/dto/response/api-response.dto';
 import { KeyValueResponseDTO } from '../../../shared/dto/response/key-value-response.dto';
 import { ProductRequestDTO } from '../../../shared/dto/request/product-request.dto';
-import { ProductResponseDTO, ProductSimpleResponseDTO } from '../../../shared/dto/response/product-response.dto';
+import {
+  ProductResponseDTO,
+  ProductSimpleResponseDTO,
+} from '../../../shared/dto/response/product-response.dto';
 import { NotificationService } from '../../../core/service/notification.service';
 
 @Component({
@@ -30,6 +33,8 @@ import { NotificationService } from '../../../core/service/notification.service'
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
+    Input,
+    Button,
     ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -39,7 +44,7 @@ import { NotificationService } from '../../../core/service/notification.service'
     NgxCurrency,
     FormError,
     PageHeader,
-    RouterLink,
+    Select,
   ],
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.scss',
@@ -51,10 +56,11 @@ export class ProductFormComponent implements OnInit {
   private readonly categoryService = inject(CategoryService);
   private readonly notificationService = inject(NotificationService);
   private readonly productService = inject(ProductService);
+  private readonly router = inject(Router);
 
   id?: string;
 
-  categories: KeyValueResponseDTO[] = [];
+  categories = signal<SelectOption[]>([]);
 
   readonly form = this.fb.group({
     name: this.fb.nonNullable.control('', Validators.required),
@@ -108,7 +114,12 @@ export class ProductFormComponent implements OnInit {
   private loadCategories(): void {
     this.categoryService.getAllCategory().subscribe({
       next: (response: ApiResponseDTO<KeyValueResponseDTO[]>) => {
-        this.categories = response.data;
+        this.categories.set(
+          (response.data ?? []).map((category) => ({
+            id: category.key,
+            name: category.value,
+          })),
+        );
       },
       error: (error: HttpErrorResponse) => {
         this.notificationService.error(error);
@@ -120,6 +131,7 @@ export class ProductFormComponent implements OnInit {
     this.productService.insert(product).subscribe({
       next: (response: ApiResponseDTO<ProductResponseDTO>) => {
         this.notificationService.success(response.message);
+        this.router.navigateByUrl('product');
       },
       error: (error: HttpErrorResponse) => {
         this.notificationService.error(error);
@@ -131,6 +143,7 @@ export class ProductFormComponent implements OnInit {
     this.productService.update(id, product).subscribe({
       next: (response: ApiResponseDTO<ProductResponseDTO>) => {
         this.notificationService.success(response.message);
+        this.router.navigateByUrl('product');
       },
       error: (error: HttpErrorResponse) => {
         this.notificationService.error(error);

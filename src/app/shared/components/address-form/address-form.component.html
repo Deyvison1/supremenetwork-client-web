@@ -4,7 +4,7 @@
     <mat-form-field appearance="outline">
       <mat-label>CEP</mat-label>
 
-      <input matInput type="text" formControlName="cep" appCep/>
+      <input matInput type="text" formControlName="cep" appCep />
 
       @if (form.controls['cep'].touched && form.controls['cep'].invalid) {
         <mat-error>
@@ -54,22 +54,6 @@
     </mat-form-field>
 
     <!-- UF -->
-    <mat-form-field appearance="outline">
-      <mat-label>UF</mat-label>
-
-      <mat-select formControlName="uf">
-        @for (uf of ufs; track uf) {
-          <mat-option [value]="uf">
-            {{ uf }}
-          </mat-option>
-        }
-      </mat-select>
-
-      @if (form.controls['uf'].touched && form.controls['uf'].invalid) {
-        <mat-error>
-          <app-form-error [control]="form.controls['uf']" />
-        </mat-error>
-      }
-    </mat-form-field>
+    <sn-select formControlName="uf" [options]="ufs" label="UF" />
   </div>
 </div>

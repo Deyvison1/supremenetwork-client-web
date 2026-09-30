@@ -9,7 +9,7 @@ import {
   Output,
 } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormError } from '@supremenetwork/ui';
+import { FormError, SelectOption, Button } from '@supremenetwork/ui';
 
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -48,7 +48,8 @@ import { MatButtonModule } from '@angular/material/button';
     FormError,
     NgxCurrency,
     AddressFormComponent,
-  ],
+    Button
+],
   templateUrl: './contract-form.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './contract-form.component.scss',
@@ -74,7 +75,7 @@ export class ContractFormComponent {
   @Output()
   removeContract = new EventEmitter<void>();
 
-  readonly ufs: string[] = ufsConstant;
+  readonly ufs: SelectOption[] = ufsConstant;
 
   selectedProduct?: ProductResponseDTO | ProductSimpleResponseDTO;
 

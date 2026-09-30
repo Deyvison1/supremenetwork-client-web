@@ -12,42 +12,34 @@
         </div>
 
         <div class="filter-actions">
-          <button mat-stroked-button type="button" (click)="clear()">
-            <mat-icon>backspace</mat-icon>
-            Limpar filtros
-          </button>
+          <sn-button
+            type="button"
+            variant="stroked"
+            icon="backspace"
+            label="Limpar filtros"
+            (click)="clear()"
+          />
 
-          <button mat-raised-button type="submit">
-            <mat-icon>search</mat-icon>
-            Pesquisar
-          </button>
+          <sn-button type="submit" variant="raised" icon="search" label="Pesquisar" />
         </div>
       </div>
 
       <div class="form-grid">
-        <mat-form-field appearance="outline">
-          <mat-label>Nome</mat-label>
+        <sn-input
+          label="Nome"
+          placeholder="Informe o nome"
+          type="text"
+          autocomplete="off"
+          formControlName="name"
+        />
 
-          <input
-            matInput
-            type="text"
-            formControlName="name"
-            placeholder="Informe o nome"
-            autocomplete="off"
-          />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Descrição</mat-label>
-
-          <input
-            matInput
-            type="text"
-            formControlName="description"
-            placeholder="Informe a descrição"
-            autocomplete="off"
-          />
-        </mat-form-field>
+        <sn-input
+          label="Descrição"
+          placeholder="Informe a descrição"
+          type="text"
+          autocomplete="off"
+          formControlName="description"
+        />
 
         <mat-form-field appearance="outline">
           <mat-label>Data de criação</mat-label>
@@ -65,7 +57,8 @@
       <mat-expansion-panel class="advanced-filters">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <mat-icon style="margin-right: 10px">tune</mat-icon>
+            <mat-icon style="margin-right: 10px"> tune </mat-icon>
+
             Filtros avançados
           </mat-panel-title>
 
@@ -73,43 +66,28 @@
         </mat-expansion-panel-header>
 
         <div class="form-grid">
-          <mat-form-field appearance="outline">
-            <mat-label>Velocidade de download</mat-label>
+          <sn-input
+            label="Velocidade de download"
+            placeholder="Mbps"
+            type="number"
+            [min]="0"
+            formControlName="speedDownload"
+          />
 
-            <input
-              matInput
-              type="number"
-              min="0"
-              formControlName="speedDownload"
-              placeholder="Mbps"
-            />
-          </mat-form-field>
+          <sn-input
+            label="Velocidade de upload"
+            placeholder="Mbps"
+            type="number"
+            [min]="0"
+            formControlName="speedUpload"
+          />
 
-          <mat-form-field appearance="outline">
-            <mat-label>Velocidade de upload</mat-label>
-
-            <input
-              matInput
-              type="number"
-              min="0"
-              formControlName="speedUpload"
-              placeholder="Mbps"
-            />
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Categoria</mat-label>
-
-            <mat-select formControlName="categoryId">
-              <mat-option [value]="null"> Todas as categorias </mat-option>
-
-              @for (category of categories; track category.key) {
-                <mat-option [value]="category.key">
-                  {{ category.value }}
-                </mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
+          <sn-select
+            formControlName="categoryId"
+            [options]="categories()"
+            label="Categoria"
+            [multiple]="false"
+          />
 
           <mat-form-field appearance="outline">
             <mat-label>Taxa de adesão</mat-label>

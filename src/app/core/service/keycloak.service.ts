@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import Keycloak from 'keycloak-js';
 
 import { environment } from '../../../environments/environment';
+import { AuthorizationService } from '@supremenetwork/ui';
 
 @Injectable({ providedIn: 'root' })
-export class KeycloakService {
+export class KeycloakService implements AuthorizationService {
   private keycloak?: Keycloak;
 
   async init(): Promise<void> {

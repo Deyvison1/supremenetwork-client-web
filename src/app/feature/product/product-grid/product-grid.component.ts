@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,7 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { PageHeader, ConfirmDialog } from '@supremenetwork/ui';
+import { PageHeader, ConfirmDialog, HasRoleDirective, Button } from '@supremenetwork/ui';
 
 import { ProductResponseDTO } from '../../../shared/dto/response/product-response.dto';
 import { ProductFilterDTO } from '../../../shared/dto/request/product-filter.dto';
@@ -40,7 +40,9 @@ import { ApiResponseDTO } from '../../../shared/dto/response/api-response.dto';
     MatSortModule,
     MatTooltipModule,
     ProductFilterComponent,
-  ],
+    HasRoleDirective,
+    Button
+],
   templateUrl: './product-grid.component.html',
   styleUrl: './product-grid.component.scss',
 })
@@ -110,7 +112,7 @@ export class ProductGridComponent {
 
   confirmaticonDeleteClient(id: string, name: string): void {
     const data: ConfirmDialogData = {
-      title: 'Excluir cliente',
+      title: 'Excluir produto',
       message: `Deseja realmente excluir produto "${name}"?`,
       confirmText: 'Excluir',
       cancelText: 'Cancelar',

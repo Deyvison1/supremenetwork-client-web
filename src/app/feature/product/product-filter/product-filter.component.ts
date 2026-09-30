@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, output, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -13,12 +13,12 @@ import { NgxCurrency } from '@dintecom/ngx-currency';
 
 import { CategoryService } from '../../../core/service/category.service';
 
-import { KeyValueResponseDTO } from '../../../shared/dto/response/key-value-response.dto';
 import { ProductFilterDTO } from '../../../shared/dto/request/product-filter.dto';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { NotificationService } from '../../../core/service/notification.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Button, Input, Select, SelectOption } from '@supremenetwork/ui';
 
 @Component({
   selector: 'app-product-filter',
@@ -35,6 +35,9 @@ import { HttpErrorResponse } from '@angular/common/http';
     MatSelectModule,
     NgxCurrency,
     MatDatepickerModule,
+    Button,
+    Input,
+    Select,
   ],
   templateUrl: './product-filter.component.html',
   styleUrl: './product-filter.component.scss',
@@ -47,7 +50,7 @@ export class ProductFilterComponent implements OnInit {
   readonly clearEvent = output<void>();
   readonly panelOpenState = signal(false);
 
-  categories: KeyValueResponseDTO[] = [];
+  categories = signal<SelectOption[]>([]);
 
   readonly form = this.fb.group({
     name: this.fb.nonNullable.control(''),
@@ -88,7 +91,12 @@ export class ProductFilterComponent implements OnInit {
   private loadCategories(): void {
     this.categoryService.getAllCategory().subscribe({
       next: (response) => {
-        this.categories = response.data ?? [];
+        this.categories.set(
+          (response.data ?? []).map((category) => ({
+            id: category.key,
+            name: category.value,
+          })),
+        );
       },
       error: (error: HttpErrorResponse) => {
         this.notificationService.error(error);

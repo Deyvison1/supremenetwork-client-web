@@ -16,10 +16,13 @@
         </div>
 
         <div class="summary-actions">
-          <button mat-flat-button color="primary" type="button" (click)="editClient()">
-            <mat-icon>edit</mat-icon>
-            Editar
-          </button>
+          <sn-button
+            type="button"
+            variant="flat"
+            icon="edit"
+            label="Editar"
+            (click)="editClient()"
+          />
         </div>
       </section>
 
@@ -135,7 +138,7 @@
                 <span>Valor do contrato</span>
                 <strong>
                   {{ contract.value | currency: 'BRL' }}
-                </strong> 
+                </strong>
               </div>
             </div>
 

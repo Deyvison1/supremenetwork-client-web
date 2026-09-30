@@ -10,8 +10,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { PageHeader, FormError } from '@supremenetwork/ui';
-
+import { PageHeader, FormError, HasRoleDirective, Button } from '@supremenetwork/ui';
 
 import { MatIconModule } from '@angular/material/icon';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -38,7 +37,6 @@ import { KeyValueResponseDTO } from '../../../shared/dto/response/key-value-resp
 import { ProductService } from '../../../core/service/product.service';
 import { map, Observable } from 'rxjs';
 import { NotificationService } from '../../../core/service/notification.service';
-import { HasRoleDirective } from '../../../shared/directives/has-role.directive';
 
 type ContactFormGroup = FormGroup<{
   value: FormControl<string>;
@@ -74,11 +72,11 @@ export type ContractFormGroup = FormGroup<{
     ReactiveFormsModule,
     FormError,
     ContactFormComponent,
-    RouterLink,
     MatTabsModule,
+    Button,
     ContractFormComponent,
-    HasRoleDirective
-],
+    HasRoleDirective,
+  ],
   providers: [provideNativeDateAdapter()],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -93,14 +91,14 @@ export class ClientFormComponent implements OnInit {
   private readonly notificationService: NotificationService = inject(NotificationService);
   private readonly service: ClientService = inject(ClientService);
   readonly pathToBack: string = 'client';
-  readonly roles: string[] = ['ADMIN_MASTER'];
+  readonly roles: string[] = ['CLIENT_MANAGE'];
 
   id?: string;
   title: string = 'Cadastro de Cliente';
 
   products: KeyValueResponseDTO[] = [];
   form = this.fb.nonNullable.group({
-    documento: ['', [Validators.required, documentValidator()]],
+    documento: ['', [documentValidator()]],
     name: ['', [Validators.required]],
     birthDate: this.fb.control<Date | null>(null, dateBeforeTodayValidator()),
     observation: this.fb.nonNullable.control(''),
@@ -133,6 +131,8 @@ export class ClientFormComponent implements OnInit {
 
         if (this.id) {
           this.loadClient(this.id);
+
+          this.form.controls.documento.disable();
           return;
         }
       },
@@ -143,16 +143,19 @@ export class ClientFormComponent implements OnInit {
   }
 
   isFormClientValid(): boolean {
-    const documento = this.form.controls['documento'];
-    const name = this.form.controls['name'];
-    const birthDate = this.form.controls['birthDate'];
+    const documento = this.form.controls.documento;
+    const name = this.form.controls.name;
+    const birthDate = this.form.controls.birthDate;
 
+    const documentoValido = this.id ? true : documento.valid;
     return (
-      documento.valid &&
+      documentoValido &&
       name.valid &&
       birthDate.valid &&
       this.contacts.length > 0 &&
-      this.contacts.valid
+      this.contacts.valid &&
+      this.contracts.length > 0 &&
+      this.contracts.valid
     );
   }
 
@@ -197,22 +200,64 @@ export class ClientFormComponent implements OnInit {
   }
 
   save(): void {
+    if (!this.isFormClientValid()) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
     const value = this.form.getRawValue();
 
     const client: ClientRequestDTO = {
       ...value,
       birthDate: formatLocalDate(value.birthDate),
-      contracts: [],
+
+      contracts: value.contracts.map((contract) => ({
+        ...contract,
+        value: contract.value!,
+        startDate: formatLocalDate(contract.startDate)!,
+        endDate: formatLocalDate(contract.endDate),
+      })),
     };
 
+    if (this.id) {
+      this.update(client);
+      return;
+    }
+
+    this.insert(client);
+  }
+
+  private insert(client: ClientRequestDTO): void {
     this.service.add(client).subscribe({
       next: (resp: ApiResponseDTO<ClientResponseDTO>) => {
-        const clientResponse: ClientResponseDTO = resp.data;
+        const clientResponse = resp.data;
+
+        this.id = clientResponse.id;
+
         this.setValueForm(clientResponse);
-        this.title = 'Atualizar client ' + clientResponse.name;
+        this.clientResponse = clientResponse;
+        this.title = 'Atualizar cliente ' + clientResponse.name;
+
+        this.form.controls.documento.disable();
+
         this.notificationService.success(resp.message);
       },
+      error: (err: HttpErrorResponse) => {
+        this.notificationService.error(err);
+      },
+    });
+  }
 
+  private update(client: ClientRequestDTO): void {
+    this.service.update(this.id!, client).subscribe({
+      next: (resp: ApiResponseDTO<ClientResponseDTO>) => {
+        const clientResponse = resp.data;
+
+        this.setValueForm(clientResponse);
+        this.clientResponse = clientResponse;
+
+        this.notificationService.success(resp.message);
+      },
       error: (err: HttpErrorResponse) => {
         this.notificationService.error(err);
       },
@@ -244,8 +289,10 @@ export class ClientFormComponent implements OnInit {
 
       value: this.fb.control<number | null>(null, Validators.required),
 
-      startDate: this.fb.control<Date | null>(null, Validators.required),
-
+      startDate: this.fb.control<Date | null>(null, [
+        Validators.required,
+        dateBeforeTodayValidator(),
+      ]),
       endDate: this.fb.control<Date | null>(null),
 
       active: this.fb.nonNullable.control(true),
@@ -300,7 +347,7 @@ export class ClientFormComponent implements OnInit {
     this.form.patchValue({
       documento: clientResponse.documento,
       name: clientResponse.name,
-      birthDate: clientResponse.birthDate,
+      birthDate: clientResponse.birthDate ? new Date(`${clientResponse.birthDate}T00:00:00`) : null,
       observation: clientResponse.observation,
     });
 

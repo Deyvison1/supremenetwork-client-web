@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CategorySearchRequestDTO } from '../../../shared/dto/request/category-search-request.dto';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { Button, Input } from '@supremenetwork/ui';
 
 @Component({
   imports: [
@@ -15,7 +16,9 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-  ],
+    Button,
+    Input
+],
   selector: 'app-category-filter',
   styleUrl: './category-filter.component.scss',
   templateUrl: './category-filter.component.html',

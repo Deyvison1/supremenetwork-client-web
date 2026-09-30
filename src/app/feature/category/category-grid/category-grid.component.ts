@@ -11,7 +11,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { PageHeader } from '@supremenetwork/ui';
+import {
+  ConfirmDialog,
+  ConfirmDialogData,
+  PageHeader,
+  HasRoleDirective,
+  Button,
+} from '@supremenetwork/ui';
 
 import { CategoryResponseDTO } from '../../../shared/dto/response/category-response.dto';
 import { CategorySearchRequestDTO } from '../../../shared/dto/request/category-search-request.dto';
@@ -24,6 +30,7 @@ import { CategoryFilterComponent } from '../category-filter/category-filter.comp
 import { NotificationService } from '../../../core/service/notification.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiResponseDTO } from '../../../shared/dto/response/api-response.dto';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-category-grid',
@@ -38,6 +45,8 @@ import { ApiResponseDTO } from '../../../shared/dto/response/api-response.dto';
     MatTooltipModule,
     PageHeader,
     CategoryFilterComponent,
+    HasRoleDirective,
+    Button,
   ],
   templateUrl: './category-grid.component.html',
   styleUrl: './category-grid.component.scss',
@@ -47,6 +56,7 @@ export class CategoryGridComponent implements OnInit {
   private readonly categoryService = inject(CategoryService);
   private readonly notificationService = inject(NotificationService);
   private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
 
   readonly displayedColumns: string[] = ['name', 'description', 'actions'];
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -107,6 +117,28 @@ export class CategoryGridComponent implements OnInit {
 
   editCategory(id: string): void {
     this.router.navigate(['/category/edit', id]);
+  }
+
+  confirmaticonDeleteCategort(id: string, name: string): void {
+    const data: ConfirmDialogData = {
+      title: 'Excluir categoria',
+      message: `Deseja realmente excluir a categoria "${name}"?`,
+      confirmText: 'Excluir',
+      cancelText: 'Cancelar',
+      icon: 'delete',
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      width: '400px',
+      data,
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (!confirmed) {
+        return;
+      }
+      this.deleteCategory(id);
+    });
   }
 
   deleteCategory(id: string): void {

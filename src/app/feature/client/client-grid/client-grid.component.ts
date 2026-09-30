@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { PageHeader, ConfirmDialog } from '@supremenetwork/ui';
+import { PageHeader, ConfirmDialog, HasRoleDirective, Button } from '@supremenetwork/ui';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -44,8 +44,10 @@ import { NotificationService } from '../../../core/service/notification.service'
     MatTableModule,
     MatPaginatorModule,
     MatTooltipModule,
-    CpfCnpjPipe
-  ],
+    CpfCnpjPipe,
+    HasRoleDirective,
+    Button
+],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-client-grid',
@@ -117,7 +119,7 @@ export class ClientGridComponent implements OnInit, AfterViewInit {
 
   viewClient(id: string): void {
     this.router.navigate(['/client/view', id]);
-  }
+  } 
 
   changeSortBy(sort: Sort): void {
     if (!sort.direction) {
@@ -158,8 +160,8 @@ export class ClientGridComponent implements OnInit, AfterViewInit {
   deleteClient(id: string) {
     this.service.delete(id).subscribe({
       next: (resp) => {
-        this.notificationService.success(resp.message);
         this.findAll();
+        this.notificationService.success(resp.message);
       },
       error: (err: HttpErrorResponse) => {
         this.notificationService.error(err);

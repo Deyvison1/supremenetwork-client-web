@@ -29,6 +29,10 @@ export class ProductService extends BaseHttpService {
     return this.getFindAll<KeyValueResponseDTO[]>(`${this.url}/list-options`);
   }
 
+  getAllProducts(): Observable<ApiResponseDTO<ProductResponseDTO[]>> {
+    return this.getFindAll<ProductResponseDTO[]>(`${this.url}/get-all`);
+  }
+
   getById(id: string): Observable<ApiResponseDTO<ProductSimpleResponseDTO>> {
     return this.getFindById<ProductSimpleResponseDTO>(`${this.url}`, id);
   }

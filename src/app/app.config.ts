@@ -14,6 +14,7 @@ import { authTokenInterceptor } from './core/interceptor/auth-token.interceptor'
 import { LoadingInterceptor } from './core/interceptor/loading.interceptor';
 import { KeycloakService } from './core/service/keycloak.service';
 import { routes } from './app.routes';
+import { AuthorizationService } from '@supremenetwork/ui';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +27,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: MAT_DATE_LOCALE,
       useValue: 'pt-BR',
+    },
+     {
+      provide: AuthorizationService,
+      useExisting: KeycloakService,
     },
     provideAppInitializer(() => {
       const keycloakService = inject(KeycloakService);

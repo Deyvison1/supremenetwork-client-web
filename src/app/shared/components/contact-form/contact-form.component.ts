@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 
-import { FormError } from '@supremenetwork/ui';
+import { FormError, Input as SnInput, Button } from '@supremenetwork/ui';
 import { ContactDirective } from '../../directives/contact.directive';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 @Component({
@@ -15,12 +15,13 @@ import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox
     ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,
+    SnInput,
     MatInputModule,
     MatIconModule,
-    FormError,
     ContactDirective,
     MatCheckboxModule,
-  ],
+    Button
+],
   standalone: true,
   selector: 'app-contact-form',
   styleUrl: './contact-form.component.scss',

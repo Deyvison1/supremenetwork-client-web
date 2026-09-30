@@ -43,6 +43,13 @@ export default withNativeFederation({
             requiredVersion: 'auto',
             build: 'package',
           },
+
+          '@supremenetwork/ui': {
+            singleton: true,
+            strictVersion: true,
+            requiredVersion: 'auto',
+            build: 'package',
+          },
         },
       },
     ),

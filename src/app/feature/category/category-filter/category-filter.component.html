@@ -1,39 +1,31 @@
 <form [formGroup]="form" (ngSubmit)="search()" class="category-filter">
   <div class="category-filter-fields">
-    <mat-form-field appearance="outline">
-      <mat-label>Nome</mat-label>
+    <sn-input
+      label="Nome"
+      placeholder="Digite o nome"
+      type="text"
+      autocomplete="off"
+      formControlName="name"
+    />
 
-      <input
-        matInput
-        type="text"
-        formControlName="name"
-        placeholder="Digite o nome"
-        autocomplete="off"
-      />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Descrição</mat-label>
-
-      <input
-        matInput
-        type="text"
-        formControlName="description"
-        placeholder="Digite a descrição"
-        autocomplete="off"
-      />
-    </mat-form-field>
+    <sn-input
+      label="Descrição"
+      placeholder="Digite a descrição"
+      type="text"
+      autocomplete="off"
+      formControlName="description"
+    />
   </div>
 
   <div class="filter-actions">
-    <button mat-stroked-button type="button" (click)="clear()">
-      <mat-icon>backspace</mat-icon>
-      Limpar filtros
-    </button>
+    <sn-button
+      type="button"
+      variant="stroked"
+      icon="backspace"
+      label="Limpar filtros"
+      (click)="clear()"
+    />
 
-    <button mat-raised-button type="submit">
-      <mat-icon>search</mat-icon>
-      Pesquisar
-    </button>
+    <sn-button type="submit" variant="raised" icon="search" label="Pesquisar" />
   </div>
 </form>

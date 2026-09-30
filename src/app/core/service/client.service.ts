@@ -8,15 +8,20 @@ import { environment } from '../../../environments/environment';
 import { PageConfig } from '../../shared/dto/pagination-config';
 import { buildPaginationParams } from '../../shared/utils/http-utils';
 import { ClientPageResponse } from '../../shared/dto/response/client-page-response.dto';
+import { ClientUpdateRequestDTO } from '../../shared/dto/request/client-update-request.dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClientService extends BaseHttpService {
   private url: string = environment.apiUrl + '/clients';
-  
+
   add(client: ClientRequestDTO): Observable<ApiResponseDTO<ClientResponseDTO>> {
     return this.post(this.url, client);
+  }
+
+  update(id: string, dto: ClientUpdateRequestDTO): Observable<ApiResponseDTO<ClientResponseDTO>> {
+    return this.put<ClientResponseDTO>(this.url, id, dto);
   }
 
   getAll(pageConfig: PageConfig<string>): Observable<ClientPageResponse> {

@@ -8,16 +8,14 @@
       }
     </div>
 
-    <button
-      mat-icon-button
+    <sn-button
       type="button"
-      color="warn"
-      aria-label="Remover contrato"
-      matTooltip="Remover contrato"
+      variant="icon"
+      icon="delete"
+      ariaLabel="Remover contrato"
+      title="Remover contrato"
       (click)="remover()"
-    >
-      <mat-icon>delete</mat-icon>
-    </button>
+    />
   </div>
 
   <div [formGroup]="form" class="form">
@@ -175,9 +173,12 @@
   </div>
 
   <div class="contract-footer">
-    <button matButton="filled" type="button" (click)="adicionarContrato()">
-      <mat-icon>add</mat-icon>
-      Adicionar outro contrato
-    </button>
+    <sn-button
+      type="button"
+      variant="flat"
+      icon="add"
+      label="Adicionar outro contrato"
+      (click)="adicionarContrato()"
+    />
   </div>
 </div>

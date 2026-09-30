@@ -172,12 +172,16 @@
     </mat-tab-group>
 
     <div class="form-actions">
-      <button mat-stroked-button type="button" routerLink="/client">Cancelar</button>
+      <sn-button type="button" variant="stroked" label="Cancelar" routerLinkTo="/client" />
 
-      <button mat-raised-button type="submit" *appHasRole="roles">
-        <mat-icon>save</mat-icon>
-        Salvar cliente
-      </button>
+      <sn-button
+        type="submit"
+        variant="raised"
+        icon="save"
+        label="Salvar cliente"
+        *appHasRole="['CLIENT_MANAGE']"
+        [disabled]="!isFormClientValid()"
+      />
     </div>
   </form>
 </div>
