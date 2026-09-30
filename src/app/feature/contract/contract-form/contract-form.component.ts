@@ -139,7 +139,6 @@ export class ContractFormComponent {
         this.selectedProduct = resp.data;
       },
       error: (err) => {
-        console.error(err);
         this.selectedProduct = undefined;
       },
     });
