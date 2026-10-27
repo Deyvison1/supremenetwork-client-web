@@ -6,9 +6,9 @@ FROM node:24-alpine AS build
 WORKDIR /app
 
 COPY package*.json ./
+COPY .npmrc ./
 
-RUN --mount=type=secret,id=npmrc,target=/root/.npmrc \
-    npm ci
+RUN npm ci
 
 COPY . .
 
