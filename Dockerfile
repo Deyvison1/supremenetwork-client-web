@@ -7,7 +7,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN --mount=type=secret,id=npmrc,target=/root/.npmrc 
+RUN --mount=type=secret,id=npmrc,target=/root/.npmrc \
     npm ci
 
 COPY . .
