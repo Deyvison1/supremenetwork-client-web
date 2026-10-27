@@ -12,7 +12,7 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run build -- --configuration production --no-prerender
+RUN npm run build -- --configuration production
 
 
 # Etapa 2 - Servir Angular
