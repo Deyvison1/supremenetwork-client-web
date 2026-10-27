@@ -14,7 +14,6 @@ COPY . .
 
 RUN npm run build -- --configuration production
 
-
 # Etapa 2 - Servir Angular
 FROM node:24-alpine AS production
 
