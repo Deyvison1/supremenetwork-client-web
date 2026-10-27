@@ -18,7 +18,7 @@ WORKDIR /app
 
 RUN npm install -g serve
 
-COPY --from=build /app/dist/animal-adoption-web/browser ./dist
+COPY --from=build /app/dist/supremenetwork-client-web/browser ./dist
 
 EXPOSE 80
 
