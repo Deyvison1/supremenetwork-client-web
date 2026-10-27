@@ -4,7 +4,7 @@ export default withNativeFederation({
   name: 'supremenetwork-client-web',
 
   remotes: {
-    'keycloak-user-mf': 'http://localhost:4201/remoteEntry.json',
+    'keycloak-user-mf': 'https://api-keycloak-integration.supreme-network.site/remoteEntry.json',
   },
 
   exposes: {
