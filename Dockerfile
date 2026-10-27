@@ -1,10 +1,14 @@
+# syntax=docker/dockerfile:1
+
 # Etapa 1 - Build
-FROM node:20-alpine AS build
+FROM node:24-alpine AS build
 
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+
+RUN --mount=type=secret,id=npmrc,target=/root/.npmrc 
+    npm ci
 
 COPY . .
 
@@ -12,7 +16,7 @@ RUN npm run build -- --configuration production --no-prerender
 
 
 # Etapa 2 - Servir Angular
-FROM node:20-alpine
+FROM node:24-alpine AS production
 
 WORKDIR /app
 
