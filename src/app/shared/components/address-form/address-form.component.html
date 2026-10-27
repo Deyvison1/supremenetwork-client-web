@@ -1,59 +1,46 @@
 <div [formGroup]="form">
   <div class="form-grid">
-    <!-- CEP -->
-    <mat-form-field appearance="outline">
-      <mat-label>CEP</mat-label>
+    <sn-input
+      label="CEP"
+      placeholder="CEP"
+      type="text"
+      autocomplete="off"
+      formControlName="cep"
+      appCep
+    />
 
-      <input matInput type="text" formControlName="cep" appCep />
+    <sn-input
+      label="Logradouro"
+      placeholder="Logradouro"
+      type="text"
+      autocomplete="off"
+      formControlName="logradouro"
+    />
 
-      @if (form.controls['cep'].touched && form.controls['cep'].invalid) {
-        <mat-error>
-          <app-form-error [control]="form.controls['cep']" />
-        </mat-error>
-      }
-    </mat-form-field>
+    <sn-input
+      label="Complemento"
+      placeholder="Complemento"
+      type="text"
+      autocomplete="off"
+      formControlName="complemento"
+    />
 
-    <!-- Logradouro -->
-    <mat-form-field appearance="outline">
-      <mat-label>Logradouro</mat-label>
+    <sn-input
+      label="Bairro"
+      placeholder="Bairro"
+      type="text"
+      autocomplete="off"
+      formControlName="bairro"
+    />
 
-      <input matInput type="text" formControlName="logradouro" />
-    </mat-form-field>
+    <sn-input
+      label="Localidade"
+      placeholder="Localidade"
+      type="text"
+      autocomplete="off"
+      formControlName="localidade"
+    />
 
-    <!-- Complemento -->
-    <mat-form-field appearance="outline">
-      <mat-label>Complemento</mat-label>
-
-      <input matInput type="text" formControlName="complemento" />
-    </mat-form-field>
-
-    <!-- Bairro -->
-    <mat-form-field appearance="outline">
-      <mat-label>Bairro</mat-label>
-
-      <input matInput type="text" formControlName="bairro" />
-
-      @if (form.controls['bairro'].touched && form.controls['bairro'].invalid) {
-        <mat-error>
-          <app-form-error [control]="form.controls['bairro']" />
-        </mat-error>
-      }
-    </mat-form-field>
-
-    <!-- Localidade -->
-    <mat-form-field appearance="outline">
-      <mat-label>Localidade</mat-label>
-
-      <input matInput type="text" formControlName="localidade" />
-
-      @if (form.controls['localidade'].touched && form.controls['localidade'].invalid) {
-        <mat-error>
-          <app-form-error [control]="form.controls['localidade']" />
-        </mat-error>
-      }
-    </mat-form-field>
-
-    <!-- UF -->
     <sn-select formControlName="uf" [options]="ufs" label="UF" />
   </div>
 </div>

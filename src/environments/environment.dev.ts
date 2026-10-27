@@ -1,11 +1,11 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8084/api/v1',
+  apiUrl: 'https://api.supreme-network.site/api/v1',
   viaCepApi: 'https://viacep.com.br/ws/',
   keycloakConfig: {
-    url: 'https://auth.animal-adoption.com.br',
+    url: 'https://auth.supreme-network.site',
     realm: 'MY_KEYCLOAK',
     clientId: 'SUPREME_NETWORK_CLIENT_APP',
-    urlAccount: 'https://auth.animal-adoption.com.br/realms/MY_KEYCLOAK/account/',
+    urlAccount: 'https://auth.supreme-network.site/realms/MY_KEYCLOAK/account/',
   },
 };

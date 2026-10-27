@@ -1,0 +1,20 @@
+services:
+  supreme-network-app:
+    build: .
+    container_name: supreme-network-app
+    restart: unless-stopped
+
+    networks:
+      - my-infra-docker
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app-supreme-network.rule=Host(`app.supreme-network.site`)"
+      - "traefik.http.routers.app-supreme-network.entrypoints=websecure"
+      - "traefik.http.routers.app-supreme-network.tls=true"
+      - "traefik.http.routers.app-supreme-network.tls.certresolver=letsencrypt"
+      - "traefik.http.services.app-supreme-network.loadbalancer.server.port=80"
+
+networks:
+  my-infra-docker:
+    external: true

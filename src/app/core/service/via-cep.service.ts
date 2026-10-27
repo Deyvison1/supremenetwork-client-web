@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { BaseHttpService } from './base-http.service';
 
 export interface ViaCepResponse {
   cep: string;
@@ -22,8 +22,7 @@ export interface ViaCepResponse {
 @Injectable({
   providedIn: 'root',
 })
-export class ViaCepService {
-  private readonly http = inject(HttpClient);
+export class ViaCepService extends BaseHttpService {
   viaCepApi: string = environment.viaCepApi;
 
   buscarCep(cep: string): Observable<ViaCepResponse> {

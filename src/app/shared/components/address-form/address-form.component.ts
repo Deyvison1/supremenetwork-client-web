@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
-import { FormError, Select } from '@supremenetwork/ui';
+import { Select, Input as SnInput } from '@supremenetwork/ui';
 import { ufsConstant } from '../../../core/constants/ufs.constant';
 import { ViaCepService } from '../../../core/service/via-cep.service';
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
@@ -23,9 +23,9 @@ import { HttpErrorResponse } from '@angular/common/http';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    FormError,
     CepDirective,
     Select,
+    SnInput
   ],
   templateUrl: './address-form.component.html',
   styleUrl: './address-form.component.scss',
