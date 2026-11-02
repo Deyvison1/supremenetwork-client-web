@@ -13,11 +13,10 @@ export class KeycloakService implements AuthorizationService {
 
     try {
       await this.keycloak.init({
-        onLoad: 'login-required',
+        onLoad: 'check-sso',
         pkceMethod: 'S256',
         checkLoginIframe: false,
       });
-
     } catch (error) {
       console.error('Erro ao inicializar o Keycloak:', error);
       throw error;
