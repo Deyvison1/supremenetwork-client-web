@@ -46,6 +46,10 @@ export class App {
     return this.keycloakService.getUserProfile()?.username;
   }
 
+  get isAuthenticated(): boolean {
+    return this.keycloakService.isLoggedIn();
+  }
+
   logout(): void {
     this.keycloakService.logout();
   }
