@@ -29,4 +29,11 @@ export class HomePageComponent implements OnInit {
       },
     });
   }
+
+  scrollToPlans(): void {
+    document.getElementById('planos')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }
 }

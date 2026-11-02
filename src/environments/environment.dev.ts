@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://api.supreme-network.site/api/v1',
+  apiUrl: 'http://localhost:8084/api/v1',
   viaCepApi: 'https://viacep.com.br/ws/',
   keycloakConfig: {
     url: 'https://auth.supreme-network.site',
