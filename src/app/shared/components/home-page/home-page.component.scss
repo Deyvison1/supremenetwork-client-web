@@ -1,3 +1,4 @@
+
 .hero {
   padding: 72px 20px 36px;
   background:
@@ -43,6 +44,16 @@ p {
   font-weight: 800;
   text-decoration: none;
   box-shadow: 0 10px 24px rgba(13, 110, 253, 0.25);
+}
+
+/* Rolagem suave até os planos */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Posicionamento da seção de planos */
+#planos {
+  scroll-margin-top: 50vh;
 }
 
 @media (max-width: 768px) {
