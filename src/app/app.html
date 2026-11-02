@@ -86,8 +86,31 @@
       </footer>
     </div>
   </div>
-} @else {
+}
+@else {
   <div class="public-layout">
+    <header class="public-header">
+      <a class="public-header__brand" routerLink="/home">
+        <span class="public-header__logo">SupremeNetwork</span>
+      </a>
+
+      <nav class="public-header__nav">
+        <a routerLink="/home">Início</a>
+        <a routerLink="/home" fragment="planos">Planos</a>
+      </nav>
+
+      <div class="public-header__actions">
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="login()"
+        >
+          <mat-icon>login</mat-icon>
+          Entrar
+        </button>
+      </div>
+    </header>
+
     <main class="public-layout__content">
       <router-outlet />
     </main>

@@ -94,7 +94,7 @@ export class KeycloakService implements AuthorizationService {
 
   logout(): void {
     this.keycloak?.logout({
-      redirectUri: globalThis.location.origin,
+      redirectUri: `${globalThis.location.origin}/home`,
     });
   }
 

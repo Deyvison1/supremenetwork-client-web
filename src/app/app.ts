@@ -53,4 +53,8 @@ export class App {
   logout(): void {
     this.keycloakService.logout();
   }
+
+  login(): void {
+    this.keycloakService.login();
+  }
 }

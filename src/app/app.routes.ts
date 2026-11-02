@@ -118,4 +118,8 @@ export const routes: Routes = [
     ],
     loadChildren: () => loadRemoteModule('keycloak-user-mf', './Routes').then((m) => m.routes),
   },
+  {
+    path: '**',
+    redirectTo: 'home',
+  },
 ];
